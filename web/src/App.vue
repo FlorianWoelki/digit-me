@@ -23,6 +23,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import * as tf from '@tensorflow/tfjs'
 
 export default {
   name: 'App',
