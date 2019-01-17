@@ -1,3 +1,9 @@
+"""
+This file is an old learning file.
+This is just for testing some things.
+Please use the new keras learning one.
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 import random as rand
