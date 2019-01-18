@@ -13,7 +13,7 @@ export default {
     return {
       model: tf.Model,
       predictions: []
-    }
+    };
   },
   methods: {
     async loadModel() {
@@ -26,7 +26,8 @@ export default {
 
       const prediction = model.predict(img);
       console.log(Array.from(prediction.dataSync()));
-    }/*,
+    }
+    /*,
     async predict() {
       const pred = await tf.tidy(() => {
         const imageData = document.querySelector('#test-image');
@@ -44,5 +45,5 @@ export default {
   mounted() {
     this.loadModel();
   }
-}
+};
 </script>
