@@ -1,39 +1,48 @@
 <template>
   <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-toolbar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+    <img id="test-image" src="@/assets/test_data/img_1.jpg" width="28" height="28">
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-import * as tf from '@tensorflow/tfjs'
+import * as tf from '@tensorflow/tfjs';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  },
-  data () {
+  data() {
     return {
-      //
+      model: tf.Model,
+      predictions: []
     }
+  },
+  methods: {
+    async loadModel() {
+      const model = await tf.loadModel('http://localhost:5000/model');
+
+      const imageData = document.querySelector('#test-image');
+      let img = tf.fromPixels(imageData, 1);
+      img = img.reshape([1, 28, 28]);
+      img = tf.cast(img, 'float32');
+
+      const prediction = model.predict(img);
+      console.log(Array.from(prediction.dataSync()));
+    }/*,
+    async predict() {
+      const pred = await tf.tidy(() => {
+        const imageData = document.querySelector('#test-image');
+        let img = tf.fromPixels(imageData, 1);
+        img = img.reshape([1, 28, 28, 1]);
+        img = tf.cast(img, 'float32');
+
+        const output = this.model.predict(img);
+
+        this.predictions = Array.from(output.dataSync());
+      });
+      return pred;
+    }*/
+  },
+  mounted() {
+    this.loadModel();
   }
 }
 </script>
