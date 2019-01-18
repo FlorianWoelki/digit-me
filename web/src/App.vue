@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <img id="test-image" src="@/assets/test_data/img_1.jpg" width="28" height="28">
+    <img id="test-image" :src="randomImage" width="28" height="28">
+    <v-btn
+      color="info"
+      @click="handleShuffle"
+    >Shuffle</v-btn>
+    <p>{{this.predictions}}</p>
   </v-app>
 </template>
 
@@ -12,20 +17,32 @@ export default {
   data() {
     return {
       model: tf.Model,
-      predictions: []
+      predictions: [],
+      randomImage: require('@/assets/test_data/img_1.jpg')
     };
   },
   methods: {
+    handleShuffle() {
+      const randomNumber = Math.floor(Math.random() * 9) + 1;
+      this.randomImage = require('@/assets/test_data/img_' +
+        randomNumber +
+        '.jpg');
+      setTimeout(() => {
+        this.predict();
+      }, 100);
+    },
     async loadModel() {
-      const model = await tf.loadModel('http://localhost:5000/model');
-
+      this.model = await tf.loadModel('http://localhost:5000/model');
+      this.predict();
+    },
+    async predict() {
       const imageData = document.querySelector('#test-image');
       let img = tf.fromPixels(imageData, 1);
       img = img.reshape([1, 28, 28]);
       img = tf.cast(img, 'float32');
 
-      const prediction = model.predict(img);
-      console.log(Array.from(prediction.dataSync()));
+      const prediction = await this.model.predict(img);
+      this.predictions = Array.from(prediction.dataSync());
     }
     /*,
     async predict() {
