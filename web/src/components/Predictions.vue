@@ -6,24 +6,38 @@ export default {
   mounted() {
     this.renderChart(
       {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July'
-        ],
+        labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
         datasets: [
           {
-            label: 'Data One',
+            label: 'Predictions',
             backgroundColor: '#f87979',
-            data: [40, 39, 10, 40, 39, 80, 40]
+            data: [100, 0, 0, 0, 0, 0, 0]
           }
         ]
       },
-      { responsive: true, maintainAspectRatio: false }
+      {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [
+            {
+              gridLines: {
+                display: false
+              }
+            }
+          ],
+          yAxes: [
+            {
+              gridLines: {
+                display: false
+              }
+            }
+          ]
+        }
+      }
     );
   }
 };
