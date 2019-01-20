@@ -6,18 +6,23 @@
       @click="handleShuffle"
     >Shuffle</v-btn>
     <p>{{this.predictions}}</p>
+
     <DrawingBoard></DrawingBoard>
+
+    <Predictions></Predictions>
   </v-app>
 </template>
 
 <script>
 import * as tf from '@tensorflow/tfjs';
 import DrawingBoard from '@/components/DrawingBoard';
+import Predictions from '@/components/Predictions';
 
 export default {
   name: 'App',
   components: {
-    DrawingBoard
+    DrawingBoard,
+    Predictions
   },
   data() {
     return {
