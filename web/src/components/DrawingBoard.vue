@@ -1,93 +1,97 @@
 <template>
-  <div class="drawing-board">
-    <canvas
-      id="canvas"
-      @mousedown="handleMouseDown"
-      @mouseup="handleMouseUp"
-      @mousemove="handleMouseMove"
-      width="400px"
-      height="400px">
-    </canvas>
+  <div>
+    <v-stage ref="stage" :config="stageSize">
+      <v-layer ref="layer">
+        <v-image 
+          ref="image"
+          :config="{
+            image: canvas,
+            x: x,
+            y: y,
+            stroke: stroke,
+            shadowBlur: shadowBlur
+          }"
+          @mousedown="handleMouseDown"
+          @mouseup="handleMouseUp"
+          @mousemove="handleMouseMove"
+        >
+        </v-image>
+      </v-layer>
+    </v-stage>
   </div>
 </template>
 
 <script>
+const width = window.innerWidth;
+const height = window.innerHeight;
+
 export default {
-  name: 'DrawingBoard',
   data() {
     return {
-      mouse: {
-        current: {
-          x: 0,
-          y: 0
-        },
-        previous: {
-          x: 0,
-          y: 0
-        },
-        down: false
-      }
+      canvas: null,
+      context: null,
+      isDrawing: false,
+      lastPointerPosition: null,
+      stageSize: {
+        width: width,
+        height: height
+      },
+      image: null,
+      x: width / 12,
+      y: height / 12 - 25,
+      stroke: 'green',
+      shadowBlur: 5
     };
   },
   methods: {
-    draw() {
-      if (this.mouse.down) {
-        const canvas = document.getElementById('canvas');
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, 800, 800);
-
-        context.lineTo(this.currentMouse.x, this.currentMouse.y);
-        context.strokeStyle = 'black';
-        context.lineWidth = 2;
-        context.stroke();
-      }
-    },
     handleMouseDown() {
-      this.mouse.down = true;
-      this.mouse.current = {
-        x: event.pageX,
-        y: event.pageY
-      };
-
-      const canvas = document.getElementById('canvas');
-      const context = canvas.getContext('2d');
-
-      context.moveTo(this.currentMouse.x, this.currentMouse.y);
+      this.isDrawing = true;
+      const stage = this.$refs.stage.getStage();
+      this.lastPointerPosition = stage.getPointerPosition();
     },
     handleMouseUp() {
-      this.mouse.down = false;
+      this.isDrawing = false;
     },
-    handleMouseMove(event) {
-      this.mouse.current = {
-        x: event.pageX,
-        y: event.pageY
-      };
+    handleMouseMove() {
+      if (!this.isDrawing) {
+        return;
+      }
 
-      this.draw();
+      this.context.globalCompositeOperation = 'source-over';
+
+      this.context.beginPath();
+
+      let localPosition = {
+        x: this.lastPointerPosition.x - this.$refs.image.getStage().getX(),
+        y: this.lastPointerPosition.y - this.$refs.image.getStage().getY()
+      };
+      this.context.moveTo(localPosition.x, localPosition.y);
+
+      let position = this.$refs.stage.getStage().getPointerPosition();
+      localPosition = {
+        x: position.x - this.$refs.image.getStage().getX(),
+        y: position.y - this.$refs.image.getStage().getY()
+      };
+      this.context.lineTo(localPosition.x, localPosition.y);
+      this.context.closePath();
+      this.context.stroke();
+
+      this.lastPointerPosition = position;
+      this.$refs.layer.getStage().batchDraw();
     }
   },
   mounted() {
-    const canvas = document.getElementById('canvas');
+    const canvas = document.createElement('canvas');
+    canvas.width = this.stageSize.width / 4;
+    canvas.height = this.stageSize.height / 2;
+
     const context = canvas.getContext('2d');
-    context.translate(0.5, 0.5);
-    context.imageSmoothingEnabled = false;
-  },
-  computed: {
-    currentMouse() {
-      const canvas = document.getElementById('canvas');
-      const rect = canvas.getBoundingClientRect();
-      return {
-        x: this.mouse.current.x - rect.left,
-        y: this.mouse.current.y - rect.top
-      };
-    }
+    context.strokeStyle = '#df4b26';
+    context.lineJoin = 'round';
+    context.lineWidth = 5;
+
+    this.canvas = canvas;
+    this.context = context;
   }
 };
 </script>
-
-<style lang="css">
-.drawing-board canvas {
-  background: white;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-}
-</style>
