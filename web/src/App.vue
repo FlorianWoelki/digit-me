@@ -7,9 +7,16 @@
     >Shuffle</v-btn>
     <p>{{this.predictions}}</p>
 
-    <DrawingBoard></DrawingBoard>
-
-    <Predictions></Predictions>
+    <v-container>
+      <v-layout row>
+        <v-flex xs12>
+          <Predictions></Predictions>
+        </v-flex>
+        <v-flex xs6>
+          <DrawingBoard></DrawingBoard>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </v-app>
 </template>
 
