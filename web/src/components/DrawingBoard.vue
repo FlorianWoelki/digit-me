@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="drawing-board">
     <canvas
       id="canvas"

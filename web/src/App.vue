@@ -7,28 +7,20 @@
     >Shuffle</v-btn>
     <p>{{this.predictions}}</p>
 
-    <v-container>
-      <v-layout row>
-        <v-flex xs12>
-          <Predictions></Predictions>
-        </v-flex>
-        <v-flex xs6>
-          <DrawingBoard></DrawingBoard>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <NewDrawingBoard />
+    <Predictions />
   </v-app>
 </template>
 
 <script>
 import * as tf from '@tensorflow/tfjs';
-import DrawingBoard from '@/components/DrawingBoard';
+import NewDrawingBoard from '@/components/NewDrawingBoard';
 import Predictions from '@/components/Predictions';
 
 export default {
   name: 'App',
   components: {
-    DrawingBoard,
+    NewDrawingBoard,
     Predictions
   },
   data() {
