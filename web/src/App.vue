@@ -1,11 +1,9 @@
 <template>
   <v-app>
+    <!-- TODO: Remove image, it is there right now just for testing -->
     <img id="test-image" :src="randomImage" width="28" height="28">
-    <v-btn
-      color="info"
-      @click="handleShuffle"
-    >Shuffle</v-btn>
-    <p>{{this.predictions}}</p>
+  
+    <Header />
 
     <v-container>
       <v-layout>
@@ -21,25 +19,27 @@
 </template>
 
 <script>
-import * as tf from '@tensorflow/tfjs';
+//import * as tf from '@tensorflow/tfjs';
 import DrawingBoard from '@/components/DrawingBoard';
 import Predictions from '@/components/Predictions';
+import Header from '@/components/Header';
 
 export default {
   name: 'App',
   components: {
     DrawingBoard,
-    Predictions
+    Predictions,
+    Header
   },
   data() {
     return {
-      model: tf.Model,
-      predictions: [],
+      /*model: tf.Model,
+      predictions: [],*/
       randomImage: require('@/assets/test_data/img_1.jpg')
     };
   },
   methods: {
-    handleShuffle() {
+    /*handleShuffle() {
       const randomNumber = Math.floor(Math.random() * 9) + 1;
       this.randomImage = require('@/assets/test_data/img_' +
         randomNumber +
@@ -60,8 +60,7 @@ export default {
 
       const prediction = await this.model.predict(img);
       this.predictions = Array.from(prediction.dataSync());
-    }
-    /*,
+    },
     async predict() {
       const pred = await tf.tidy(() => {
         const imageData = document.querySelector('#test-image');
