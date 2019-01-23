@@ -39,8 +39,7 @@ export default {
       image: null,
       x: width / 12,
       y: height / 12 - 25,
-      stroke: 'green',
-      shadowBlur: 5
+      stroke: '#ff4d4d'
     };
   },
   methods: {
@@ -86,9 +85,9 @@ export default {
     canvas.height = this.stageSize.height / 2;
 
     const context = canvas.getContext('2d');
-    context.strokeStyle = '#df4b26';
+    context.strokeStyle = 'gray';
     context.lineJoin = 'round';
-    context.lineWidth = 5;
+    context.lineWidth = 3;
 
     this.canvas = canvas;
     this.context = context;
