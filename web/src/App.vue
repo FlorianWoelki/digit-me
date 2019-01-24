@@ -8,10 +8,10 @@
     <v-container>
       <v-layout>
         <v-flex xs6>
-          <Predictions />
+          <DrawingBoard />
         </v-flex>
         <v-flex xs6>
-          <DrawingBoard />
+          <Predictions />
         </v-flex>
       </v-layout>
     </v-container>

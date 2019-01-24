@@ -9,7 +9,7 @@ export default {
         labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
         datasets: [
           {
-            label: 'Predictions',
+            label: 'Prediction',
             backgroundColor: '#f87979',
             data: [100, 0, 0, 0, 0, 0, 0]
           }

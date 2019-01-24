@@ -87,7 +87,7 @@ export default {
     const context = canvas.getContext('2d');
     context.strokeStyle = 'gray';
     context.lineJoin = 'round';
-    context.lineWidth = 3;
+    context.lineWidth = 10;
 
     this.canvas = canvas;
     this.context = context;
