@@ -8,8 +8,7 @@
             image: canvas,
             x: x,
             y: y,
-            stroke: stroke,
-            shadowBlur: shadowBlur
+            stroke: stroke
           }"
           @mousedown="handleMouseDown"
           @mouseup="handleMouseUp"

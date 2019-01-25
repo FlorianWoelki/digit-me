@@ -1,21 +1,13 @@
 <script>
-import { Bar } from 'vue-chartjs';
+import { Bar, mixins } from 'vue-chartjs';
+const { reactiveProp } = mixins;
 
 export default {
   extends: Bar,
-  mounted() {
-    this.renderChart(
-      {
-        labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        datasets: [
-          {
-            label: 'Prediction',
-            backgroundColor: '#f87979',
-            data: [100, 0, 0, 0, 0, 0, 0]
-          }
-        ]
-      },
-      {
+  mixins: [reactiveProp],
+  data() {
+    return {
+      chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
@@ -38,7 +30,10 @@ export default {
           ]
         }
       }
-    );
+    };
+  },
+  mounted() {
+    this.renderChart(this.chartData, this.chartOptions);
   }
 };
 </script>
