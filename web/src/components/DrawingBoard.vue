@@ -17,6 +17,10 @@
         </v-image>
       </v-layer>
     </v-stage>
+
+    <div class="text-xs-center">
+      <v-btn color="info" @click="handleErase">Erase</v-btn>
+    </div>
   </div>
 </template>
 
@@ -43,6 +47,13 @@ export default {
     };
   },
   methods: {
+    handleErase() {
+      this.isDrawing = false;
+      this.drawnImage.image = null;
+
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.$refs.layer.getStage().batchDraw();
+    },
     handleMouseDown() {
       this.isDrawing = true;
       const stage = this.$refs.stage.getStage();
@@ -99,3 +110,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.info {
+  margin-top: -500px;
+}
+</style>

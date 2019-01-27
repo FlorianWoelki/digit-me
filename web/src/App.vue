@@ -74,8 +74,6 @@ export default {
       image = image.reshape([1, 28, 28]);
       image = tf.cast(image, 'float32');
 
-      console.log(image);
-
       const prediction = await this.model.predict(image);
       this.predictions = Array.from(prediction.dataSync());
       this.fillData();
@@ -86,9 +84,14 @@ export default {
   },
   watch: {
     'drawnImage.image': function() {
-      this.drawnImage.image.width = 28;
-      this.drawnImage.image.height = 28;
-      this.predictImage(this.drawnImage.image);
+      if (this.drawnImage.image != null) {
+        this.drawnImage.image.width = 28;
+        this.drawnImage.image.height = 28;
+        this.predictImage(this.drawnImage.image);
+      } else {
+        this.predictions = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.fillData();
+      }
     }
   }
 };
