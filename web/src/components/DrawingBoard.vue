@@ -25,6 +25,7 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 
 export default {
+  props: ['drawnImage'],
   data() {
     return {
       canvas: null,
@@ -49,6 +50,11 @@ export default {
     },
     handleMouseUp() {
       this.isDrawing = false;
+
+      let image = new Image();
+      image.id = 'image-id';
+      image.src = this.canvas.toDataURL();
+      this.drawnImage.image = image;
     },
     handleMouseMove() {
       if (!this.isDrawing) {
