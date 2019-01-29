@@ -109,7 +109,7 @@ export default {
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.strokeStyle = 'white';
     context.lineCap = 'round';
-    context.lineWidth = 10;
+    context.lineWidth = 20;
 
     this.canvas = canvas;
     this.context = context;
