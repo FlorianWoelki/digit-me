@@ -51,7 +51,7 @@ export default {
       this.isDrawing = false;
       this.drawnImage.image = null;
 
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
       this.$refs.layer.getStage().batchDraw();
     },
     handleMouseDown() {
@@ -65,7 +65,9 @@ export default {
       let image = new Image();
       image.id = 'image-id';
       image.src = this.canvas.toDataURL();
-      this.drawnImage.image = image;
+
+      this.context.drawImage(this.canvas, 0, 0, 28, 28);
+      this.drawnImage.image = this.context.getImageData(0, 0, 28, 28);
     },
     handleMouseMove() {
       if (!this.isDrawing) {
@@ -93,6 +95,9 @@ export default {
 
       this.lastPointerPosition = position;
       this.$refs.layer.getStage().batchDraw();
+
+      this.context.drawImage(this.canvas, 0, 0, 28, 28);
+      this.drawnImage.image = this.context.getImageData(0, 0, 28, 28);
     }
   },
   mounted() {
@@ -101,8 +106,9 @@ export default {
     canvas.height = this.stageSize.height / 2;
 
     const context = canvas.getContext('2d');
-    context.strokeStyle = 'gray';
-    context.lineJoin = 'round';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = 'white';
+    context.lineCap = 'round';
     context.lineWidth = 10;
 
     this.canvas = canvas;

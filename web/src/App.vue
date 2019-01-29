@@ -33,7 +33,6 @@ export default {
       model: tf.Model,
       predictions: [],
       chartData: null,
-      randomImage: require('@/assets/test_data/img_1.jpg'),
       drawnImage: {
         image: null
       }
@@ -85,8 +84,8 @@ export default {
   watch: {
     'drawnImage.image': function() {
       if (this.drawnImage.image != null) {
-        this.drawnImage.image.width = 28;
-        this.drawnImage.image.height = 28;
+        //this.drawnImage.image.width = 28;
+        //this.drawnImage.image.height = 28;
         this.predictImage(this.drawnImage.image);
       } else {
         this.predictions = [0, 0, 0, 0, 0, 0, 0, 0, 0];
