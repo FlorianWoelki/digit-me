@@ -108,7 +108,7 @@ export default {
     const context = canvas.getContext('2d');
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.strokeStyle = 'white';
-    context.lineCap = 'round';
+    context.lineJoin = 'round';
     context.lineWidth = 20;
 
     this.canvas = canvas;
