@@ -2,6 +2,7 @@ import tensorflow as tf
 import tensorflowjs as tfjs
 import numpy as np
 import matplotlib.pyplot as plt
+from tensorflow.keras.callbacks import TensorBoard
 
 mnist = tf.keras.datasets.mnist  # 28x28 images of handwritten digits 0-9
 
@@ -12,6 +13,8 @@ x_test = tf.keras.utils.normalize(x_test, axis=1)
 
 
 def train():
+    tensorboard = TensorBoard(log_dir='logs/learning-model')
+
     model = tf.keras.models.Sequential()
     model.add(tf.keras.layers.Flatten(input_shape=x_train.shape[1:]))
     model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
@@ -21,7 +24,7 @@ def train():
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
-    model.fit(x_train, y_train, epochs=10)
+    model.fit(x_train, y_train, epochs=10, callbacks=[tensorboard])
 
     model.save('digit_model.h5')
     tfjs.converters.save_keras_model(model, 'target')
