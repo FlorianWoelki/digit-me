@@ -3,6 +3,8 @@
 
 # 🤖 Digit Me
 
+Digit Me is a online digit recognizer. It was trained in Python with Tensorflow and rendered in VueJS
+
 ## Table of Contents
 
 * [About the Project](#about-the-project)
@@ -23,7 +25,11 @@ Coming Soon
 
 ### Built With
 
-Coming Soon
+* [👨‍💻 VueJS](https://vuejs.org) 
+* [📁 Vuetify](https://vuetifyjs.com/en/)
+* [📈 Chart.js](https://www.chartjs.org/)
+* [🤖 Tensorflow](https://www.tensorflow.org/)
+* [🖥 TensorflowJS](https://js.tensorflow.org/)
 
 
 ## Getting Started
